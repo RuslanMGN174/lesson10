@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html :: head"/>
+
+<body>
+
+<nav th:replace="fragments/head.html :: navbar ('none')"/>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <h1>Access Denied</h1>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer.html :: scripts"/>
+
+</body>
+
+</html>

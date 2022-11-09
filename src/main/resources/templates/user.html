@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head.html :: head"/>
+
+<body>
+
+<nav th:replace="fragments/head.html :: navbar ('Users')"/>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/user/new}">Добавить</a>
+        </div>
+
+        <div class="col-12 mt-3">
+            <form class="form-inline" th:method="get">
+
+                <div class="form-group mb-2 mr-2">
+                    <label for="usernameFilter" class="sr-only">Username filter</label>
+                    <input type="text" class="form-control" id="usernameFilter" th:value="${param.usernameFilter}"
+                           name="usernameFilter" placeholder="Username filter">
+                </div>
+
+                <div class="form-group mb-2 mr-2">
+                    <label for="ageMinFilter" class="sr-only">Age min</label>
+                    <input type="number" class="form-control" id="ageMinFilter" th:value="${param.ageMinFilter}"
+                           name="ageMinFilter" placeholder="Age min filter">
+                </div>
+
+                <div class="form-group mb-2 mr-2">
+                    <label for="ageMaxFilter" class="sr-only">Age max</label>
+                    <input type="number" class="form-control" id="ageMaxFilter" th:value="${param.ageMaxFilter}"
+                           name="ageMaxFilter" placeholder="Age max filter">
+                </div>
+
+                <button type="submit" class="btn btn-primary mb-2">Apply</button>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <table class="table table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header ('Id', 'id')"/>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header ('Username', 'username')"/>
+                    <th scope="col" th:replace="fragments/sort_header :: sort_header ('Age', 'age')"/>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${users.hasContent()}" th:each="user : ${users.content}">
+                    <th th:text="${user.id}" scope="row">1</th>
+                    <td th:text="${user.username}">Alex</td>
+                    <td th:text="${user.age}">21</td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/user/{id}(id = ${user.id})}"><i class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:method="delete" th:action="@{/user/{id}(id = ${user.id})}">
+                            <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+
+                <tr th:unless="${users.hasContent()}">
+                    <td colspan="4">No data</td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="fragments/footer.html :: scripts"/>
+
+</body>
+</html>
